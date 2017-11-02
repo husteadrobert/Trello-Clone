@@ -225,6 +225,7 @@ img.cardIcon {
 
 #singleCard p {
   padding: 5px 0;
+  white-space: pre-wrap;
 }
 
 #singleCard a {

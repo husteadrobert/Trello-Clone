@@ -117,7 +117,7 @@ this["JST"]["singleComment"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"m
 
   return "<li>  <h3>"
     + alias4(((helper = (helper = helpers.author || (depth0 != null ? depth0.author : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"author","hash":{},"data":data}) : helper)))
-    + "</h3>  <p>"
+    + "</h3>  <p class=\"commentMessage\">"
     + alias4(((helper = (helper = helpers.message || (depth0 != null ? depth0.message : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"message","hash":{},"data":data}) : helper)))
     + "</p>  <p class=\"lightText\">"
     + alias4((helpers.formatTime || (depth0 && depth0.formatTime) || alias2).call(alias1,(depth0 != null ? depth0.timestamp : depth0),{"name":"formatTime","hash":{},"data":data}))
