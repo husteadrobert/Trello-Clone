@@ -1,0 +1,50 @@
+{
+  "lastCardID": 5,
+  "lastListID": 2,
+  "data": [
+    {
+      "id": 1,
+      "boardID": 1,
+      "title": "Test List 1",
+      "cards": [
+        {
+          "cardID": 1,
+          "title": "Test Card 1",
+          "description": "Test Description",
+          "commentCount": 0
+        },
+        {
+          "cardID": 2,
+          "title": "Test Card 2",
+          "description": "Test Description",
+          "commentCount": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "boardID": 1,
+      "title": "Test List 2",
+      "cards": [
+        {
+          "cardID": 3,
+          "title": "Test Card 1a",
+          "description": "Test Description a",
+          "commentCount": 0
+        },
+        {
+          "cardID": 4,
+          "title": "Test Card 2a",
+          "description": "Test Description b",
+          "commentCount": 0
+        },
+        {
+          "cardID": 5,
+          "title": "Test Card 3a",
+          "description": "Test Description c",
+          "commentCount": 0
+        }
+      ]
+    }
+  ]
+}

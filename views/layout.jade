@@ -1,0 +1,23 @@
+include /_mixins
+
+doctype html
+html
+  head
+    title 260 Assessment
+    +stylesheet_link_tag("style")
+    +javascript_include_tag("vendor/all")
+    +javascript_include_tag("handlebarsTemplates")
+  body
+    header
+      input(type="text" readonly="true" id="searchBox")
+      a(href="/index") Trello Clone
+
+    main
+      div(id="searchResults")
+      #content
+
+    +javascript_include_tag("application")
+    +javascript_include_tag("models/list", "models/singleCard")
+    +javascript_include_tag("collections/lists")
+    +javascript_include_tag("views/list", "views/singleCard")
+    +javascript_include_tag("router")

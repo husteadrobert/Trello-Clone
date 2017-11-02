@@ -1,0 +1,16 @@
+<li>
+  <article class="list addList" data-boardID="{{boardID}}">
+    <header>
+      <h3>Add a list...</h3>
+    </header>
+    <footer>
+      <form action="/addList/{{boardID}}" method="POST" id="newListForm">
+        <fieldset>
+          <textarea rows="1" name="newListTitle" placeholder="Add a list..."></textarea>
+          <input type="submit" value="Save">
+          <a href="#" id="closeAddList">X</a>
+        </fieldset>
+      </form>
+    </footer>
+  </article>
+</li>

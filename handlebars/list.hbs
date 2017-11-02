@@ -1,0 +1,20 @@
+<article class="list" data-id="{{id}}">
+  <header>
+    <h3>{{title}} <span class="deleteItem">X</span></h3>
+  </header>
+  <body>
+    <ul>
+
+    </ul>
+  </body>
+  <footer>
+    <a href="#" id="addCardToList">Add a card...</a>
+    <form action="/addCardToList/{{id}}" method="POST" class="addCardForm">
+      <fieldset>
+        <textarea rows="3" name="newCardTitle"></textarea>
+        <input type="submit" value="Add">
+        <a href="#" id="closeAddCardToList">X</a>
+      </fieldset>
+    </form>
+  </footer>
+</article>

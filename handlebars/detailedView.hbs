@@ -1,0 +1,34 @@
+<section id="cardTitle">
+  <span id="listIcon" class="cardIcon"></span>
+  <h2>{{title}}</h2>
+  <span class="deleteItem" id="removeModal">X</span>
+  <form class="editCardTitle" action="/editCardTitle/{{cardID}}" method="put">
+    <textarea rows="2" cols="75" name="cardTitle">{{title}}</textarea>
+  </form>
+  <p class="lightText">in list <span id="listName">{{listTitle}}</span></p>
+  <p class="lightText">Description <a href="#" id="editDescription">Edit</a></p>
+  <p class="description">{{description}}</p>
+  <form action="/editCardDescription" method="PUT" class="editCardForm">
+    <fieldset>
+      <textarea rows="3" cols="75" name="cardDescription">{{description}}</textarea>
+      <input type="submit" value="Save">
+      <a href="#" id="closeEditCard">X</a>
+    </fieldset>
+  </form>
+</section>
+<section id="cardComments">
+  <span id="personIcon" class="cardIcon"></span>
+  <h2>Add Comment</h2>
+  <form action="/addComment/{{cardID}}" method="POST" class="addCommentForm">
+    <fieldset>
+      <textarea cols="75" rows="5"></textarea>
+      <input type="submit" value="Save">
+    </fieldset>
+  </form>
+</section>
+<section id="cardActivity">
+  <span id="chatIcon" class="cardIcon"></span>
+  <h2>Activity</h2>
+  <ul>
+  </ul>
+</section>

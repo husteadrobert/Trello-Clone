@@ -1,0 +1,15 @@
+<ul>
+  {{#each cards}}
+    <li class="card" data-id="{{cardID}}">
+      <a href="#">
+        <p class="description">{{title}}</p>
+      </a>
+      {{#if description}}
+        <img src="/images/edit.png" class="cardIcon">
+      {{/if}}
+      {{#if commentCount}}
+        <img src="/images/chat.png" class="cardIcon"> {{commentCount}}
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>

@@ -1,0 +1,20 @@
+<li class="card" data-id="{{cardID}}">
+  <form class="editCardTitle" action="/editCardTitle/{{cardID}}" method="put">
+    <fieldset>
+      <input name="cardTitle" type="text" value="{{title}}" autocomplete="off">
+      <button class="updateCardTitle">Save</button>
+      <button class="button" id="cancelEditButton">Cancel</button>
+    </fieldset>
+  </form>
+  <a href="#">
+    <p class="description">{{title}}</p>
+    
+    <div class="editImage"></div>
+    {{#if description}}
+      <img src="/images/list.png" class="cardIcon">
+    {{/if}}
+    {{#if commentCount}}
+      <img src="/images/chat.png" class="cardIcon"> {{commentCount}}
+    {{/if}}
+  </a>
+</li>
