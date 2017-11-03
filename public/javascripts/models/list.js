@@ -5,13 +5,10 @@ var List = Backbone.Model.extend({
     currentOrder.push(String(data.cardID));
     this.updateStorage(currentOrder);
     this.set('cardOrder', currentOrder);
-    this.trigger("cardAdded");
+    this.trigger('change:cardAdded');
   },
   insertCard: function(data) {
     this.get('cards').push(data);
-  },
-  removeList: function() {
-    this.view.removeList();
   },
   getCurrentOrder: function() {
     var id = this.get('id');
@@ -21,19 +18,19 @@ var List = Backbone.Model.extend({
     var cards = this.get('cards');
     var card = _(cards).findWhere({ cardID: cardID });
     card.title = data;
-    this.trigger("cardTitleUpdated");
+    this.trigger('update');
   },
   updateCardDescription: function(cardID, description) {
     var cards = this.get('cards');
     var card = _(cards).findWhere({ cardID: cardID });
     card.description = description;
-    this.trigger("cardDescriptionUpdated")
+    this.trigger('update');
   },
   addComment: function(cardID) {
     var cards = this.get('cards');
     var selectedCard = _.findWhere(cards, {cardID: cardID});
     selectedCard.commentCount = selectedCard.commentCount + 1;
-    this.trigger("cardCommentUpdated");
+    this.trigger('update');
   },
   readStorage: function() {
     var id = this.get('id');
@@ -65,6 +62,5 @@ var List = Backbone.Model.extend({
   },
   initialize: function() {
     this.readStorage();
-    this.on('remove', this.removeList.bind(this));
   }
 });

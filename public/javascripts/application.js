@@ -62,7 +62,7 @@ var App = {
       update: function(event, ui) {
         var order = $(this).sortable("toArray", {attribute: 'data-id'});
         var listID = $(ui.item).closest('article').attr('data-id');
-        App.lists.updateListOrder(listID, order);
+        App.lists.updateListsCardOrder(listID, order);
       }
     });
     

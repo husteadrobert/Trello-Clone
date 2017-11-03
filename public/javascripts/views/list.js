@@ -13,15 +13,12 @@ var listView = Backbone.View.extend({
     "submit .editCardTitle": "updateCardTitle",
     "submit .addCardForm": "addCard"
   },
-  findIndex: function(id) {
-    return this.$el.find('ul li[data-id="' + id +'"]').index();
-  },
   editCardTitle: function(e) {
     e.preventDefault();
     e.stopPropagation();
     App.trigger('displayModal');
-    $(e.currentTarget).closest('li').find('form').css('display', 'block');
-    $(e.currentTarget).siblings('a').css('display', 'none');
+    $(e.currentTarget).closest('li').find('form').show();
+    $(e.currentTarget).siblings('a').hide();
   },
   updateCardTitle: function(e) {
     e.preventDefault();
@@ -41,15 +38,15 @@ var listView = Backbone.View.extend({
     if (data.cardTitle.length > 0) {
       App.trigger('updateCardTitle', data)
     }
-    $(e.currentTarget).prev('li').find('form').css('display', 'none');
-    $(e.currentTarget).prev('li').find('a').css('display', 'block');
-    $(e.currentTarget).css('display', 'none');
+    $(e.currentTarget).prev('li').find('form').hide();
+    $(e.currentTarget).prev('li').find('a').show();
+    $(e.currentTarget).hide();
 
   },
   removeEditCard: function(e) {
     e.preventDefault();
     App.trigger('removeModal');
-    $(e.currentTarget).closest('form').css('display', 'none');
+    $(e.currentTarget).closest('form').hide();
   },
   deleteList: function(e) {
     e.preventDefault();
@@ -85,21 +82,20 @@ var listView = Backbone.View.extend({
     this.$('form').find('textarea').val('');
   },
   removeAddButton: function() {
-    this.$el.find('footer > a').css('display', 'none');
+    this.$el.find('footer > a').hide();
   },
   displayAddButton: function() {
-    this.$el.find('footer > a').css('display', 'block');
+    this.$el.find('footer > a').show();
   },
   removeForm: function() {
-    this.$el.find('footer form').css('display', 'none');
+    this.$el.find('footer form').hide();
   },
   displayForm: function() {
-    this.$el.find('footer form').css('display', 'block');
+    this.$el.find('footer form').show();
     this.$el.find('footer form textarea').focus();
   },
   renderSingleCard: function() {
-    this.render();
-    App.trigger('refreshSortable');
+    this.refresh();
     this.removeAddButton();
     this.displayForm();
   },
@@ -134,15 +130,10 @@ var listView = Backbone.View.extend({
   removeList: function() {
     this.$el.remove();
   },
-  refreshSingleCard: function() {
-    this.render();
-    App.trigger('refreshSortable');
+  removeListTest: function() {
+    console.log('hello!!!');
   },
-  updateDescription: function() {
-    this.render();
-    App.trigger('refreshSortable');
-  },
-  updateComments: function() {
+  refresh: function() {
     this.render();
     App.trigger('refreshSortable');
   },
@@ -150,9 +141,8 @@ var listView = Backbone.View.extend({
     this.model.view = this;
     this.$el.attr('data-id', this.model.get('id'));
     this.render();
-    this.listenTo(this.model, "cardAdded", this.renderSingleCard);
-    this.listenTo(this.model, "cardTitleUpdated", this.refreshSingleCard);
-    this.listenTo(this.model, "cardDescriptionUpdated", this.updateDescription);
-    this.listenTo(this.model, "cardCommentUpdated", this.updateComments);
+    this.listenTo(this.model, 'change:cardAdded', this.renderSingleCard);
+    this.listenTo(this.model, 'update', this.refresh);
+    this.listenTo(this.model, 'remove', this.removeList);
   }
 });

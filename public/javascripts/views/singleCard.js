@@ -19,8 +19,8 @@ var singleCardView = Backbone.View.extend({
     var $textarea = this.$el.find('textarea[name="cardTitle"]');
     var $h2 = this.$el.find('#cardTitle > h2');
     if ($textarea.val() === "" || $textarea.val() === this.model.get('title')) {
-      $textarea.css('display', 'none');
-      $h2.css('display', 'inline-block');
+      $textarea.hide()
+      $h2.show();
       return;
     }
     var $f = $textarea.closest('form');
@@ -29,7 +29,7 @@ var singleCardView = Backbone.View.extend({
     data.cardID = this.model.get('cardID');
     data.action = $f.attr('action');
     data.method = $f.attr('method');
-    $textarea.css('display', 'none');
+    $textarea.hide();
     $h2.css('display', 'inline-block').text(data.cardTitle);
     App.trigger("updateCardTitle", data);
   },
@@ -48,15 +48,14 @@ var singleCardView = Backbone.View.extend({
     data.action = $f.attr('action');
     data.method = $f.attr('method');
     data.timestamp = Date.now();
-    //CHANGE THIS TO REAL USER NAME
     data.author = "Random User";
     App.trigger("addComment", data);
   },
   editTitle: function(e) {
     e.preventDefault();
-    $(e.currentTarget).css('display', 'none');
+    $(e.currentTarget).hide();
     var $textarea = this.$el.find('textarea[name="cardTitle"]');
-    $textarea.css('display', 'block');
+    $textarea.show();
     var val = $textarea.val();
     $textarea.focus().val('').val(val);
   },
@@ -67,8 +66,8 @@ var singleCardView = Backbone.View.extend({
     var $f = this.$el.find('form.editCardForm')
     var $textarea = $f.find('textarea');
     if ($textarea.val() === "" || $textarea.val() === this.model.get('description')) {
-      $p.css('display', 'block');
-      $f.css('display', 'none');
+      $p.show();
+      $f.hide();
       return;
     }
     data.description = $textarea.val();
@@ -77,23 +76,23 @@ var singleCardView = Backbone.View.extend({
     data.action = $f.attr('action');
     data.method = $f.attr('method');
     $p.css('display', 'block').text(data.description);
-    $f.css('display', 'none');
+    $f.hide();
     App.trigger("updateCardDescription", data);
   },
   closeEditCard: function(e) {
     e.preventDefault();
     var $p = this.$el.find('p.description')
     var $f = this.$el.find('form.editCardForm')
-    $p.css('display', 'block');
-    $f.css('display', 'none');
+    $p.show();
+    $f.hide();
   },
   showEditDescription: function(e) {
     e.preventDefault();
     var $p = this.$el.find('p.description')
     var $f = this.$el.find('form.editCardForm')
     var val = this.model.get('description');
-    $p.css('display', 'none');
-    $f.css('display', 'block');
+    $p.hide();
+    $f.show();
     $f.find('textarea').focus().val('').val(val);
   },
   removeView: function(e) {
@@ -113,7 +112,6 @@ var singleCardView = Backbone.View.extend({
         self.$el.find('#cardActivity > ul').append(self.commentsTemplate(comment));
       });
     }
-
   },
   render: function() {
     this.$el.html(this.template(this.model.toJSON()));

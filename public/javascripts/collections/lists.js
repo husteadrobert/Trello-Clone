@@ -12,7 +12,7 @@ var Lists = Backbone.Collection.extend({
   updateCardDescription: function(listID, cardID, description) {
     this.get(listID).updateCardDescription(cardID, description);
   },
-  updateListOrder: function(listID, order) {
+  updateListsCardOrder: function(listID, order) {
     var currentList = this.get(listID);
     currentList.updateStorage(order);
     currentList.set('cardOrder', order);
@@ -22,8 +22,7 @@ var Lists = Backbone.Collection.extend({
     return currentList.removeCard(cardID);
   },
   insertCardToList: function(card, listID) {
-    var currentList = this.get(listID);
-    currentList.insertCard(card);
+    this.get(listID).insertCard(card);
   },
   findAllCards: function() {
     var result = [];
