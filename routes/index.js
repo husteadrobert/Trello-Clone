@@ -4,7 +4,7 @@ var path = require('path');
 var Lists = require(path.resolve(path.dirname(__dirname), "modules/lists"));
 var Comments = require(path.resolve(path.dirname(__dirname), "modules/comments"));
 
-/* GET home page. */
+/* GET Routes */
 router.get('/', function(req, res, next) {
   res.redirect('/index');
 });
@@ -25,6 +25,14 @@ router.get('/loadLists/:boardID', function(req, res, next) {
 router.get('/index/:boardID/:cardID', function(req, res, next) {
   res.render('index', { listsData: Lists.get() });
 });
+
+router.get('/loadComments/:cardID', function(req, res, next) {
+  var cardID = +req.params.cardID;
+  var comments = Comments.find(cardID);
+  res.json(comments);
+});
+
+/* POST Routes */
 
 router.post('/addCardToList/:listID', function(req, res, next) {
   var card = {};
@@ -54,16 +62,16 @@ router.post('/addList/:boardID', function(req, res, next) {
   res.json(list);
 });
 
-router.delete('/deleteList/:listID', function(req, res, next) {
-  Lists.deleteList(+req.params.listID);
-  res.status(200).end();
+router.post('/addComment/:cardID', function(req, res, next) {
+  var cardID = +req.params.cardID;
+  var message = req.body.message;
+  var timestamp = +req.body.timestamp;
+  var author = req.body.author;
+  var newComment = Comments.addComment(cardID, message, timestamp, author);
+  res.json(newComment);
 });
 
-router.delete('/deleteCard/:cardID', function(req, res, next) {
-  var id = +req.params.cardID;
-  Lists.deleteCard(id);
-  res.status(200).end();
-});
+/* PUT Routes */
 
 router.put('/editCardTitle/:cardID', function(req, res, next) {
   var listID = +req.body.listID;
@@ -81,26 +89,23 @@ router.put('/editCardDescription', function(req, res, next) {
   res.status(200).end();
 });
 
-
-router.get('/loadComments/:cardID', function(req, res, next) {
-  var cardID = +req.params.cardID;
-  var comments = Comments.find(cardID);
-  res.json(comments);
-});
-
-router.post('/addComment/:cardID', function(req, res, next) {
-  var cardID = +req.params.cardID;
-  var message = req.body.message;
-  var timestamp = +req.body.timestamp;
-  var author = req.body.author;
-  var newComment = Comments.addComment(cardID, message, timestamp, author);
-  res.json(newComment);
-});
-
 router.put('/incrementCommentCounter', function(req, res, next) {
   var cardID = +req.body.cardID;
   var listID = +req.body.listID;
   Lists.incrementCommentCounter(listID, cardID);
+  res.status(200).end();
+});
+
+/* DELETE Routes */
+
+router.delete('/deleteList/:listID', function(req, res, next) {
+  Lists.deleteList(+req.params.listID);
+  res.status(200).end();
+});
+
+router.delete('/deleteCard/:cardID', function(req, res, next) {
+  var id = +req.params.cardID;
+  Lists.deleteCard(id);
   res.status(200).end();
 });
 

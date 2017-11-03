@@ -8,8 +8,6 @@ var router = new (Backbone.Router.extend({
 
 router.on("route:singleCardView", function(boardID, cardID) {
   App.listsView(boardID, cardID);
-  //var listID = App.lists.findListByCardID(+cardID);
-  //App.detailedCardView(cardID, listID);
 });
 
 Backbone.history.start({

@@ -16,22 +16,11 @@ var App = {
     });
   },
   init: function() {
-    /*
-    App.bindEvents();
-    App.$el.append(App.templates.header({boardTitle: App.currentBoardTitle}));
-    App.renderLists();
-    App.makeCardsSortable();
-    App.$el.find('#listsDisplay').append(App.templates.addList({boardID: App.currentBoardID}));
-    App.makeListsSortable();
-    App.bindAddListEvents();
-    */
-
     App.$el.append(App.templates.header({boardTitle: App.currentBoardTitle}));
     App.renderLists();
     App.$el.find('#listsDisplay').append(App.templates.addList({boardID: App.currentBoardID}));
     App.makeCardsSortable();
     App.makeListsSortable();
-    //App.bindAddListEvents();
     App.bindEvents();
   },
   listsView: function(boardID, cardID) {
@@ -59,41 +48,6 @@ var App = {
       router.navigate('/index/' + this.currentBoardID);
     }
   },
-  /*
-  bindAddListEvents: function() {
-    $('article.addList').on('click', function(e) {
-      e.preventDefault();
-      this.displayNewListForm();
-    }.bind(this));
-    $('#closeAddList').on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation()
-      this.removeNewListForm();
-    }.bind(this));
-    $('#newListForm input').on('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      var data = {};
-      var $f = $('#newListForm');
-      $f.serializeArray().forEach(function(item) {
-        data[item.name] = item.value;
-      });
-      if (data.newListTitle === "") {
-        return;
-      }
-      data.action = $f.attr('action');
-      data.method = $f.attr('method');
-      data.boardID = $f.closest('form').attr('data-boardID');
-      this.addList(data);
-    }.bind(this));
-    $('#newListForm textarea').on('blur', function(e) {
-      if ($(e.relatedTarget).is('input')) {
-        return;
-      }
-      this.removeNewListForm();
-    }.bind(this));
-  },
-  */
   makeCardsSortable: function() {
     $('article.list > ul').sortable({
        connectWith: "article.list > ul",

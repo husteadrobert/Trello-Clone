@@ -21,26 +21,25 @@ module.exports = {
     return this.__readFile().lastListID;
   },
 
+  saveFile: function(lastCardID, lastListID, data) {
+    fs.writeFileSync(file_path, JSON.stringify({
+      lastCardID: lastCardID,
+      lastListID: lastListID,
+      data: data
+    }), "utf8");
+  },
 
   addCardToList: function(listID, data) {
     var lists = this.get();
     var selectedList = _(lists).findWhere({id: +listID});
     selectedList.cards.push(data);
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID() + 1,
-      lastListID: this.getLastListID(),
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID() + 1, this.getLastListID(), lists);
   },
 
   addList: function(data) {
     var lists = this.get();
     lists.push(data);
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID(),
-      lastListID: this.getLastListID() + 1,
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID(), this.getLastListID() + 1, lists);
   },
 
   deleteList: function(id) {
@@ -48,11 +47,7 @@ module.exports = {
     lists = _.reject(lists, function(element) {
       return element.id === id;
     });
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID(),
-      lastListID: this.getLastListID(),
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID(), this.getLastListID(), lists);
   },
 
   deleteCard: function(id) {
@@ -69,11 +64,7 @@ module.exports = {
       return card.cardID !== id;
     });
     selectedList.cards = cards;
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID(),
-      lastListID: this.getLastListID(),
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID(), this.getLastListID(), lists);
   },
 
   updateCardTitle: function(listID, card, newTitle) {
@@ -81,11 +72,7 @@ module.exports = {
     var selectedList = _(lists).findWhere({ id: listID });
     var selectedCard = _(selectedList.cards).findWhere({ cardID: card });
     selectedCard.title = newTitle;
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID(),
-      lastListID: this.getLastListID(),
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID(), this.getLastListID(), lists);
   },
 
   updateCardDescription: function(listID, cardID, newDescription) {
@@ -93,11 +80,7 @@ module.exports = {
     var selectedList = _(lists).findWhere({ id: listID });
     var selectedCard = _(selectedList.cards).findWhere({ cardID: cardID });
     selectedCard.description = newDescription;
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID(),
-      lastListID: this.getLastListID(),
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID(), this.getLastListID(), lists);
   },
 
   incrementCommentCounter: function(listID, cardID) {
@@ -105,10 +88,6 @@ module.exports = {
     var selectedList = _(lists).findWhere({ id: listID });
     var selectedCard = _(selectedList.cards).findWhere({ cardID: cardID });
     selectedCard.commentCount += 1;
-    fs.writeFileSync(file_path, JSON.stringify({
-      lastCardID: this.getLastCardID(),
-      lastListID: this.getLastListID(),
-      data: lists
-    }), "utf8");
+    this.saveFile(this.getLastCardID(), this.getLastListID(), lists);
   }
 };
