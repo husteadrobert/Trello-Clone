@@ -65,7 +65,6 @@ var App = {
         App.lists.updateListsCardOrder(listID, order);
       }
     });
-    
   },
   makeListsSortable: function() {
     $('#listsDisplay').sortable({
@@ -168,14 +167,14 @@ var App = {
     });
   },
   displayNewListForm: function() {
-    $('article.addList form').css('display', 'block');
+    $('article.addList form').show();
     $('article.addList form textarea').focus();
-    $('article.addList h3').css('display', 'none');
+    $('article.addList h3').hide();
   },
   removeNewListForm: function() {
     $('article.addList form textarea').val('');
-    $('article.addList form').css('display', 'none');
-    $('article.addList h3').css('display', 'inline');
+    $('article.addList form').hide();
+    $('article.addList h3').show();
   },
   removeSingleList(id) {
     this.lists.removeList(id);
@@ -213,11 +212,11 @@ var App = {
     });
   },
   renderSearchResults: function(cards) {
-    $('#searchResults').css('display', 'block');
+    $('#searchResults').show();
     $('#searchResults').html(this.templates.searchResults({cards: cards}));
   },
   removeSearchResults: function() {
-    $('#searchResults').css('display', 'none');
+    $('#searchResults').hide();
   },
   searchCards(text) {
     var result = this.lists.searchCards(text);

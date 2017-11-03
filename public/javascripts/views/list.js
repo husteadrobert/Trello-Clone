@@ -144,5 +144,5 @@ var listView = Backbone.View.extend({
     this.listenTo(this.model, 'change:cardAdded', this.renderSingleCard);
     this.listenTo(this.model, 'update', this.refresh);
     this.listenTo(this.model, 'remove', this.removeList);
-  }
+  },
 });
