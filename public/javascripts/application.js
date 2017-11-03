@@ -23,31 +23,6 @@ var App = {
     App.makeListsSortable();
     App.bindEvents();
   },
-  listsView: function(boardID, cardID) {
-    if (this.needsInit) {
-      $.ajax({
-        url: "/loadLists/" + App.currentBoardID,
-        method: "GET",
-        success: function(response) {
-          $('#boardView').remove();
-          App.lists = new Lists(response);
-          App.init();
-          if (cardID) {
-            var listID = App.lists.findListByCardID(+cardID);
-            App.detailedCardView(cardID, listID);
-          }
-        }
-      });
-    } else if (cardID) {
-        var listID = App.lists.findListByCardID(+cardID);
-        App.detailedCardView(cardID, listID);
-        router.navigate('/index/' + this.currentBoardID + '/' + cardID);
-    } else {
-      this.$el.siblings('#singleCard').remove();
-      this.$el.siblings('#modalLayer').remove();
-      router.navigate('/index/' + this.currentBoardID);
-    }
-  },
   makeCardsSortable: function() {
     $('article.list > ul').sortable({
        connectWith: "article.list > ul",
@@ -75,25 +50,6 @@ var App = {
       update: function(event, ui) {
         var order = $(this).sortable("toArray", {attribute: 'data-id'});
         App.updateStorage(order);
-      }
-    });
-  },
-  transferCard(cardID, originalListID, targetListID) {
-    var self = this;
-    $.ajax({
-      url: "/deleteCard/" + cardID,
-      type: "delete",
-      data: { cardID: cardID },
-      success: function(response) {
-        var card = self.lists.removeCardFromList(cardID, originalListID);
-        $.ajax({
-          url: "/transferCardToList/" + targetListID,
-          type: "post",
-          data: { cardData: JSON.stringify(card) },
-          success: function(response) {
-            self.lists.insertCardToList(card, targetListID);
-          }
-        });
       }
     });
   },
@@ -125,17 +81,6 @@ var App = {
   updateStorage: function(order) {
     localStorage.setItem('allLists', JSON.stringify(order));
   },
-  addCardToList: function(data) {
-    var self = this;
-    $.ajax({
-      url: data.action,
-      type: data.method,
-      data: { newCardTitle: data.newCardTitle },
-      success: function(response) {
-        self.lists.addCardToList(response, data.listID);
-      }
-    });
-  },
   appendNewList: function(response) {
     var newListModel = new List(response);
     var newListView = new listView({
@@ -154,18 +99,6 @@ var App = {
     }
     this.makeCardsSortable();
   },
-  addList: function(data) {
-    this.removeNewListForm();
-    var self = this;
-    $.ajax({
-      url: data.action,
-      type: data.method,
-      data: { listTitle: data.newListTitle },
-      success: function(response) {
-        self.appendNewList(response);
-      }
-    });
-  },
   displayNewListForm: function() {
     $('article.addList form').show();
     $('article.addList form textarea').focus();
@@ -183,33 +116,12 @@ var App = {
     this.updateStorage(order);
     localStorage.removeItem('list' + id);
   },
-  deleteList: function(id) {
-    var self = this;
-    $.ajax({
-      url: "/deleteList/" + id,
-      type: "DELETE",
-      success: function(response) {
-        self.removeSingleList(id);
-      }
-    });
-  },
   displayModal: function() {
     $('main').append(this.templates.modal());
   },
   removeModal: function() {
     $('#modalLayer').remove();
     router.navigate('/index/' + this.currentBoardID);
-  },
-  updateCardTitle: function(data) {
-    var self = this;
-    $.ajax({
-      url: data.action,
-      method: data.method,
-      data: {title: data.cardTitle, listID: data.listID },
-      success: function(response) {
-        self.lists.updateCardTitle(data.listID, data.cardID, data.cardTitle);
-      }
-    });
   },
   renderSearchResults: function(cards) {
     $('#searchResults').show();
@@ -224,6 +136,34 @@ var App = {
       this.renderSearchResults(result);
     } else {
       this.removeSearchResults();
+    }
+  },
+
+  /* Ajax Requests to Express Router */
+
+  listsView: function(boardID, cardID) {
+    if (this.needsInit) {
+      $.ajax({
+        url: "/loadLists/" + App.currentBoardID,
+        method: "GET",
+        success: function(response) {
+          $('#boardView').remove();
+          App.lists = new Lists(response);
+          App.init();
+          if (cardID) {
+            var listID = App.lists.findListByCardID(+cardID);
+            App.detailedCardView(cardID, listID);
+          }
+        }
+      });
+    } else if (cardID) {
+        var listID = App.lists.findListByCardID(+cardID);
+        App.detailedCardView(cardID, listID);
+        router.navigate('/index/' + this.currentBoardID + '/' + cardID);
+    } else {
+      this.$el.siblings('#singleCard').remove();
+      this.$el.siblings('#modalLayer').remove();
+      router.navigate('/index/' + this.currentBoardID);
     }
   },
   detailedCardView: function(cardID, listID) {
@@ -247,6 +187,69 @@ var App = {
       }
     });
     router.navigate('index/' + this.currentBoardID +'/' + cardID);
+  },
+  transferCard(cardID, originalListID, targetListID) {
+    var self = this;
+    $.ajax({
+      url: "/deleteCard/" + cardID,
+      type: "delete",
+      data: { cardID: cardID },
+      success: function(response) {
+        var card = self.lists.removeCardFromList(cardID, originalListID);
+        $.ajax({
+          url: "/transferCardToList/" + targetListID,
+          type: "post",
+          data: { cardData: JSON.stringify(card) },
+          success: function(response) {
+            self.lists.insertCardToList(card, targetListID);
+          }
+        });
+      }
+    });
+  },
+  addCardToList: function(data) {
+    var self = this;
+    $.ajax({
+      url: data.action,
+      type: data.method,
+      data: { newCardTitle: data.newCardTitle },
+      success: function(response) {
+        self.lists.addCardToList(response, data.listID);
+      }
+    });
+  },
+  addList: function(data) {
+    this.removeNewListForm();
+    var self = this;
+    $.ajax({
+      url: data.action,
+      type: data.method,
+      data: { listTitle: data.newListTitle },
+      success: function(response) {
+        self.appendNewList(response);
+      }
+    });
+  },
+  deleteList: function(id) {
+    var self = this;
+    $.ajax({
+      url: "/deleteList/" + id,
+      type: "DELETE",
+      success: function(response) {
+        self.removeSingleList(id);
+      }
+    });
+  },
+  updateCardTitle: function(data) {
+    var self = this;
+    $.ajax({
+      url: data.action,
+      method: data.method,
+      data: {title: data.cardTitle, listID: data.listID },
+      success: function(response) {
+        self.lists.updateCardTitle(data.listID, data.cardID, data.cardTitle);
+      }
+    });
   },
   addComment: function(data) {
     var self = this;
@@ -281,6 +284,9 @@ var App = {
       }
     });
   },
+
+  /* Event Binding */
+  
   bindEvents: function() {
     this.needsInit = false;
     _.extend(this, Backbone.Events);
