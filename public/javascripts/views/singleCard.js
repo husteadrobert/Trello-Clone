@@ -18,6 +18,11 @@ var singleCardView = Backbone.View.extend({
     var data = {};
     var $textarea = this.$el.find('textarea[name="cardTitle"]');
     var $h2 = this.$el.find('#cardTitle > h2');
+    if ($textarea.val() === "" || $textarea.val() === this.model.get('title')) {
+      $textarea.css('display', 'none');
+      $h2.css('display', 'inline-block');
+      return;
+    }
     var $f = $textarea.closest('form');
     data.cardTitle = $textarea.val();
     data.listID = +this.model.get('listID');
@@ -35,6 +40,9 @@ var singleCardView = Backbone.View.extend({
     var $f = $textarea.closest('form');
     data.message = $textarea.val();
     $textarea.val("");
+    if( data.message === "") {
+      return;
+    }
     data.listID = +this.model.get('listID');
     data.cardID = this.model.get('cardID');
     data.action = $f.attr('action');
@@ -58,6 +66,11 @@ var singleCardView = Backbone.View.extend({
     var $p = this.$el.find('p.description')
     var $f = this.$el.find('form.editCardForm')
     var $textarea = $f.find('textarea');
+    if ($textarea.val() === "" || $textarea.val() === this.model.get('description')) {
+      $p.css('display', 'block');
+      $f.css('display', 'none');
+      return;
+    }
     data.description = $textarea.val();
     data.listID = +this.model.get('listID');
     data.cardID = this.model.get('cardID');

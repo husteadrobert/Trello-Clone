@@ -8,6 +8,9 @@ This is a clone of the popular online application [Trello](https://trello.com "T
 +jQuery UI
 +Backbone
 +Handlebars
++Express
++Jade(Pug)
++Underscore
 
 ## Installation Instructions
 

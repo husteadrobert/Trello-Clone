@@ -78,8 +78,6 @@ Outstanding Issues:
 
   Change Ajax routes and just include list/card ids in data
 
-  Sanity Checking in Detailed View, if same desc/title don't do anything
-
   Move a lot of methods in App to Lists Collection
 
   Waiting GIF
@@ -99,7 +97,7 @@ Solved Issues:
   Only one add card text box should be open
   Cancel Button for EDit Title
   'There Are No Comments' still shows when add first comment
-
+  Sanity Checking in Detailed View, if same desc/title don't do anything
 
 ---Presentation---
 
