@@ -62,10 +62,27 @@ var App = {
     });
     singleList.$el.appendTo(App.$el.find('#listsDisplay'));
   },
+  synchronizeLists: function(order) {
+    var lists = this.lists.toJSON();
+    var listIDs = _.pluck(lists, 'id');
+    listIDs.forEach(function(id) {
+      if (order.indexOf(String(id)) === -1) {
+        order.push(String(id));
+      }
+    });
+    order = order.filter(function(id) {
+      if (listIDs.indexOf(+id) === -1) {
+        localStorage.removeItem('list' + id);
+      }
+      return listIDs.indexOf(+id) !== -1
+    });
+    return order;
+  },
   renderLists: function() {
     var self = this;
     var order = this.readStorage();
     if (order.length !== 0) {
+      order = this.synchronizeLists(order);
       order.forEach(function(listID) {
         var selectedList = self.lists.get(+listID);
         self.renderSingleList(selectedList);
@@ -75,8 +92,8 @@ var App = {
       this.lists.each(function(list) {
         order.push(String(list.get('id')));
       });
-      this.updateStorage(order);
     }
+    this.updateStorage(order);
   },
   updateStorage: function(order) {
     localStorage.setItem('allLists', JSON.stringify(order));

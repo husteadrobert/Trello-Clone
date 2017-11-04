@@ -32,10 +32,24 @@ var List = Backbone.Model.extend({
     selectedCard.commentCount = selectedCard.commentCount + 1;
     this.trigger('update');
   },
-  readStorage: function() {
+  synchronizeCards: function(order) {
+    var cards = this.get('cards');
+    var cardIDs = _.pluck(cards, 'cardID');
+    cardIDs.forEach(function(id) {
+      if (order.indexOf(String(id)) === -1) {
+        order.push(String(id));
+      }
+    });
+    order = order.filter(function(id) {
+        return cardIDs.indexOf(+id) !== -1
+    });
+    return order;
+  },
+  init: function() {
     var id = this.get('id');
     var order = JSON.parse(localStorage.getItem('list' + id));
     if (order) {
+      order = this.synchronizeCards(order);
       this.set('cardOrder', order);
     } else {
       var order = [];
@@ -43,8 +57,8 @@ var List = Backbone.Model.extend({
       cards.forEach(function(card) {
         order.push(String(card.cardID));
       });
-      this.updateStorage(order);
     }
+    this.updateStorage(order);
   },
   updateStorage: function(order) {
     var id = this.get('id');
@@ -61,6 +75,6 @@ var List = Backbone.Model.extend({
     return removedCard;
   },
   initialize: function() {
-    this.readStorage();
+    this.init();
   }
 });
