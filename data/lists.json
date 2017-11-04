@@ -5,18 +5,18 @@
     {
       "id": 1,
       "boardID": 1,
-      "title": "Test List 1",
+      "title": "Test List",
       "cards": [
         {
           "cardID": 1,
-          "title": "Test Card 1",
-          "description": "Test Description",
-          "commentCount": 0
+          "title": "Welcome to my Trello Clone!",
+          "description": "This is my Trello Clone.",
+          "commentCount": 1
         },
         {
           "cardID": 2,
-          "title": "Test Card 2",
-          "description": "Test Description",
+          "title": "You can add Cards to Lists.",
+          "description": "",
           "commentCount": 0
         }
       ]
@@ -24,24 +24,24 @@
     {
       "id": 2,
       "boardID": 1,
-      "title": "Test List 2",
+      "title": "Another List",
       "cards": [
         {
           "cardID": 3,
-          "title": "Test Card 1a",
+          "title": "You can Drag and Drop Cards",
           "description": "Test Description a",
           "commentCount": 0
         },
         {
           "cardID": 4,
-          "title": "Test Card 2a",
-          "description": "Test Description b",
+          "title": "Or use the search box (use Escape to clear it quickly)",
+          "description": "",
           "commentCount": 0
         },
         {
           "cardID": 5,
-          "title": "Test Card 3a",
-          "description": "Test Description c",
+          "title": "You can also make new Lists.",
+          "description": "",
           "commentCount": 0
         }
       ]
