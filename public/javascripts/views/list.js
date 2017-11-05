@@ -130,9 +130,6 @@ var listView = Backbone.View.extend({
   removeList: function() {
     this.$el.remove();
   },
-  removeListTest: function() {
-    console.log('hello!!!');
-  },
   refresh: function() {
     this.render();
     App.trigger('refreshSortable');
