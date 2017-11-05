@@ -12,6 +12,24 @@ This is a clone of the popular online application [Trello](https://trello.com "T
 +Jade(Pug)
 +Underscore
 
+## Features
+
+Click Board 1 to open the Board.
+
+Create Lists and Cards.
+You can Drag and Drop Lists and Cards, and transfer Cards from one list to another.
+Delete Lists by clicking the 'X' in the corner of the list.
+Edit Card Titles by clicking the Pencil Icon.
+
+To view details on a card, click on a card anywhere other than the pencil Icon.
+In the detailed view, you can Edit the title inline.
+You can also edit the Description.
+
+Feel free to add comments to cards as well.  Currently, comments can not be edited or deleted.
+
+You can search for cards quickly by using the text box at the top.  Results are clickable to open the detailed view.
+You can delete the contents of the search box quickly by pressing escape.
+
 ## Installation Instructions
 
 1. Ensure you have **Node** installed on your computer by opening a Terminal(do this by using PowerShell on Windows) and typing `node -v` .  If you do not have Node installed, you can download [Node](https://nodejs.org/en/download/) here.  Follow the Instructions for your Operating System.
