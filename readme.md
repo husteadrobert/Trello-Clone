@@ -2,15 +2,17 @@
 
 This is a clone of the popular online application [Trello](https://trello.com "Trello").
 
+# [Try it Out!](https://rh-trello-clone.herokuapp.com/index/1)
+
 ## Libraries/Frameworks Used
 
-+jQuery
-+jQuery UI
-+Backbone
-+Handlebars
-+Express
-+Jade(Pug)
-+Underscore
++ jQuery
++ jQuery UI
++ Backbone
++ Handlebars
++ Express
++ Jade(Pug)
++ Underscore
 
 ## Features
 
